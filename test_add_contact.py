@@ -12,21 +12,21 @@ def app(request):
     return fixture
 
 
-def test_add_contact(self):
-    self.app.login(username="admin", password="secret")
-    self.app.create_contact(
+def test_add_contact(app):
+    app.login(username="admin", password="secret")
+    app.create_contact(
         Contact(first_name="firstname", last_name="last name", address="Moscow", email="test@msk.com",
                 mobile="123"))
-    self.app.return_to_home_page()
-    self.app.logout()
+    app.return_to_home_page()
+    app.logout()
 
 
-def test_empty_contact(self):
-    self.app.login(username="admin", password="secret")
-    self.app.create_contact(Contact(first_name="", last_name="", address="", email="",
+def test_empty_contact(app):
+    app.login(username="admin", password="secret")
+    app.create_contact(Contact(first_name="", last_name="", address="", email="",
                                     mobile=""))
-    self.app.return_to_home_page()
-    self.app.logout()
+    app.return_to_home_page()
+    app.logout()
 
 
 def tearDown(self):
