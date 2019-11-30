@@ -14,18 +14,16 @@ def app(request):
 
 def test_add_contact(app):
     app.session.login(username="admin", password="secret")
-    app.create_contact(
+    app.contact.create(
         Contact(first_name="firstname", last_name="last name", address="Moscow", email="test@msk.com",
                 mobile="123"))
-    app.return_to_home_page()
     app.session.logout()
 
 
 def test_empty_contact(app):
     app.session.login(username="admin", password="secret")
-    app.create_contact(Contact(first_name="", last_name="", address="", email="",
-                                    mobile=""))
-    app.return_to_home_page()
+    app.contact.create(Contact(first_name="", last_name="", address="", email="",
+                               mobile=""))
     app.session.logout()
 
 
