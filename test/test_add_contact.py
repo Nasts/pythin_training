@@ -15,7 +15,3 @@ def test_empty_contact(app):
     app.contact.create(Contact(first_name="", last_name="", address="", email="",
                                mobile=""))
     app.session.logout()
-
-
-def tearDown(self):
-    self.app.destroy()

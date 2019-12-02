@@ -10,7 +10,7 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        #self.wd = WebDriver()
+        # self.wd = WebDriver()
         self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
@@ -18,8 +18,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost:8080/addressbook/group.php")
-
+        wd.get("http://localhost:8080/addressbook/")
 
     def return_to_home_page(self):
         wd = self.wd
