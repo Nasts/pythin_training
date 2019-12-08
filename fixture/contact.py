@@ -64,3 +64,7 @@ class ContactHelper:
         # init add to group
         wd.find_element_by_name("add").click()
         self.go_to_group_page()
+
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
