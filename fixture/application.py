@@ -9,7 +9,7 @@ from fixture.session import SessionHelper
 class Application:
 
     def __init__(self):
-        self.wd = webdriver.Firefox()
+        self.wd = webdriver.Chrome()
         # self.wd = WebDriver()
         self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
@@ -29,7 +29,7 @@ class Application:
 
     def return_to_home_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_link_text("home").click()
 
     def destroy(self):
         self.wd.quit()

@@ -6,7 +6,6 @@ def test_add_contact(app):
     app.contact.create(
         Contact(first_name="firstname", last_name="last name", address="Moscow", email="test@msk.com",
                 mobile="123"))
-    app.session.logout()
 
 
 def test_empty_contact(app):
