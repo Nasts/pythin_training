@@ -2,7 +2,13 @@
 from model.group import Group
 
 
-def test_edit_group(app):
-    app.session.login(username="admin", password="secret")
+def test_edit_first_group(app):
     app.group.edit_first_group(Group(name="new edit group", header="new edit group", footer="new edit group"))
-    app.session.logout()
+
+
+def test_edit_group_name(app):
+    app.group.edit_first_group(Group(name="change new edit group"))
+
+
+def test_edit_group_header(app):
+    app.group.edit_first_group(Group(header="change new header group"))
