@@ -1,5 +1,6 @@
 from model.group import Group
 
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -35,19 +36,47 @@ class GroupHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    # def delete_first_group(self):
+    #     wd = self.app.wd
+    #     self.open_groups_page()
+    #     self.select_first_group()
+    #     # submit deletion
+    #     wd.find_element_by_name("delete").click()
+    #     self.rerurn_to_groups_page()
+    #     self.group_cache = None
+
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.rerurn_to_groups_page()
         self.group_cache = None
 
-    def edit_first_group(self, group):
+    # def edit_first_group(self, group):
+    #     wd = self.app.wd
+    #     self.open_groups_page()
+    #     self.select_first_group()
+    #     # init update group
+    #     wd.find_element_by_name("edit").click()
+    #     # edit group firm
+    #     self.fill_group_form(group)
+    #     # submit update group creation
+    #     wd.find_element_by_name("update").click()
+    #     self.rerurn_to_groups_page()
+    #     self.group_cache = None
+
+    def edit_first_group(self):
+        self.edit_first_group(0)
+
+    def edit_group_by_index(self, index, group):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # init update group
         wd.find_element_by_name("edit").click()
         # edit group firm
@@ -60,6 +89,10 @@ class GroupHelper:
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def rerurn_to_groups_page(self):
         wd = self.app.wd
@@ -83,10 +116,3 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
-
-
-
-
-
-
-
