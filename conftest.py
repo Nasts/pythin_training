@@ -15,7 +15,7 @@ def app(request):
         # создаем фикстуру, т.е. объект типа Application
         fixture = Application(browser=browser, base_url=base_url, password=password)
     else:
-        if not fixture.is_valid(browser=browser, base_url=base_url, password=password):
+        if not fixture.is_valid():
             fixture = Application()
     fixture.session.ensure_login(username="admin", password=password)
     return fixture
