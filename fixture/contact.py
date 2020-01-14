@@ -150,7 +150,8 @@ class ContactHelper:
         mobile_phone = wd.find_element_by_name("mobile").get_attribute("value")
         secondary_phone = wd.find_element_by_name("phone2").get_attribute("value")
         work_phone = wd.find_element_by_name("work").get_attribute("value")
-        return Contact(last_name=last_name, first_name=first_name, id=id, address=address, email=email, second_email=second_email,
+        return Contact(last_name=last_name, first_name=first_name, id=id, address=address, email=email,
+                       second_email=second_email,
                        third_email=third_email, mobile_phone=mobile_phone,
                        home_phone=home_phone, secondary_phone=secondary_phone, work_phone=work_phone)
 
@@ -187,7 +188,15 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+    def add_contact_by_id_to_group(self, id):
+        wd = self.app.wd
+        self.return_to_home_page()
+        # select first contact
+        self.select_contact_by_id(id)
+        # init add to group
+        wd.find_element_by_name("add").click()
+        self.go_to_group_page()
+
     def select_contact_by_id(self, id):
         wd = self.app.wd
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
-
