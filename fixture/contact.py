@@ -1,3 +1,7 @@
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+
+from fixture.group import GroupHelper
 from model.contact import Contact
 import re
 
@@ -188,15 +192,32 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
-    def add_contact_by_id_to_group(self, id):
+    def add_contact_by_id_to_group(self, contact, group):
         wd = self.app.wd
         self.return_to_home_page()
-        # select first contact
-        self.select_contact_by_id(id)
-        # init add to group
+        self.select_contact_by_id(contact.id)
+        self.select_group_to_add_by_id(group.id)
         wd.find_element_by_name("add").click()
+        self.go_to_group_page()
+
+    def remove_contact_by_id_to_group(self, contact, group):
+        wd = self.app.wd
+        self.return_to_home_page()
+        self.select_group_by_id(group.id)
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_name("remove").click()
         self.go_to_group_page()
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def select_group_to_add_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("select[name='to_group']").click()
+        wd.find_element_by_css_selector("select[name='to_group'] option[value='%s']" % id).click()
+
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("select[name='group']").click()
+        wd.find_element_by_css_selector("select[name='group'] option[value='%s']" % id).click()

@@ -21,14 +21,21 @@ class ORMFixture:
     class ORMContact(db.Entity):
         _table_ = 'addressbook'
         id = PrimaryKey(int, column='id')
-        firs_tname = Optional(str, column='firstname')
+        first_name = Optional(str, column='firstname')
         last_name = Optional(str, column='lastname')
-        deprecated = Optional(datetime, column='deprecated', sql_default=None)
+        deprecated = Optional(str, column='deprecated', sql_default=None)
         groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts",
                      lazy=True)
 
+    # class ORMContactInGroup(db.Entity):
+    #     _table_ = 'address_in_groups'
+    #     group_id = PrimaryKey(int, column='group_id')
+    #     id = Optional(int, column='id')
+    #     contacts_in_groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts",
+    #                  lazy=True)
+
     def __init__(self, host, name, user, password):
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=conversions)
         self.db.generate_mapping()
         sql_debug(True)
 
@@ -40,7 +47,7 @@ class ORMFixture:
 
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), last_name=contact.lastname, first_name=contact.firstname)
+            return Contact(id=str(contact.id), last_name=contact.last_name, first_name=contact.first_name)
 
         return list(map(convert, contacts))
 
@@ -62,3 +69,7 @@ class ORMFixture:
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
         return self.convert_contacts_to_model(
             select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
+
+    @db_session
+    def get_contacts_in_any_groups(self):
+        return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.groups))
