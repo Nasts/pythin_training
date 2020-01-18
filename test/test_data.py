@@ -1,5 +1,6 @@
 import re
 from random import randrange
+from fixture.db import DbFixture
 
 
 def test_phones_on_home_page(app):
@@ -17,7 +18,7 @@ def test_phones_on_contact_view_page(app):
     assert contact_from_view_page.secondary_phone == contact_from_edit_page.secondary_phone
 
 
-def test_data_on_home_page(app):
+def test_data_on_home_page(app, db):
     contact_from_home_page = app.contact.get_contact_list()
     index = randrange(len(contact_from_home_page))
     contact_from_home_page_by_index = app.contact.get_contact_list()[index]
@@ -27,6 +28,12 @@ def test_data_on_home_page(app):
     assert contact_from_home_page_by_index.all_emails_from_home_page == merge_emails_like_on_home_page(
         contact_from_edit_page)
     assert contact_from_home_page_by_index.address == contact_from_edit_page.address
+
+def test_data_db_home_page(app, db):
+    contacts_from_home_page = app.contact.get_contact_list()
+    contacts_from_db = db.get_contact_list()
+
+
 
 
 def clear(s):
