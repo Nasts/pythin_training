@@ -31,11 +31,15 @@ def test_data_on_home_page(app, db):
     assert contact_from_home_page_by_index.address == contact_from_edit_page.address
 
 def test_data_db_home_page(app, db):
-    contacts_from_home_page = app.contact.get_contact_list()
-    contacts_from_db = db.get_contact_list()
-    assert sorted(contacts_from_home_page, key=Contact.id_or_max) == sorted(contacts_from_db, key=Contact.id_or_max)
+    contacts_from_home_page = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+    contacts_from_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
 
-
+    for i, contact_from_page in enumerate(contacts_from_home_page):
+        contact_from_db = contacts_from_db[i]
+        assert contact_from_page == contact_from_db
+        assert contact_from_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db)
+        assert contact_from_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_db)
+        assert contact_from_page.address == contact_from_db.address
 
 
 def clear(s):
@@ -50,4 +54,4 @@ def merge_phones_like_on_home_page(contact):
 
 
 def merge_emails_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x != "",[contact.email, contact.second_email, contact.third_email]))
+    return "\n".join(filter(lambda x: x != "" and x is not None,[contact.email, contact.second_email, contact.third_email]))
