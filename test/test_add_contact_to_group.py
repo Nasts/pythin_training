@@ -37,17 +37,3 @@ def test_add_some_contact_to_group(app):
 
 
 
-
-    # for group in group_list:
-    #     list_contacts_not_in_group = db.get_contacts_not_in_group(group)
-    #     if list_contacts_not_in_group:
-    #         contact = random.choice(list_contacts_not_in_group)
-    #         app.contact.add_contact_by_id_to_group(contact, group)
-    #         break
-    #     else:
-    #         contact = Contact(id = maxsize, first_name="edit_first_name_4", last_name="edit_last_name_4")
-    #         group = random.choice(group_list)
-    #         app.contact.add_contact_by_id_to_group(contact, group)
-    #         break
-    # contact_list = db.get_contacts_in_group(group)
-    # assert contact in contact_list

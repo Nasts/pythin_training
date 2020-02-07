@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import pytest
+
 from model.contact import Contact
 
 
+@pytest.mark.skip(reason="Skipped Test")
 def test_add_contact(app, db, json_contacts, check_ui):
     contact = json_contacts
     old_contacts = db.get_contact_list()
