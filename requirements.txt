@@ -7,4 +7,3 @@ pymysql
 mysql-connector-python-rf
 allure-pytest==2.8.6
 allure-python-commons==2.8.6
-lxml-4.5.0-cp37-cp37m-win_amd64.whl
